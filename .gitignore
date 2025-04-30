@@ -1,4 +1,9 @@
 /target
+src/part-1/target
+src/part-2/target
+src/part-3/target
+src/part-4/target
+src/part-5/target
 # Prerequisites
 *.d
 
