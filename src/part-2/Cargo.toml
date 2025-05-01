@@ -4,3 +4,6 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+whoami = "1.6"
+sysinfo = "0.34"
+chrono = "0.4"
