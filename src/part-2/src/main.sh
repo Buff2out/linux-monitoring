@@ -12,11 +12,10 @@ fi
 #     Не создавать лишних процессов
 #     Без source переменные бы не сохранились!
 
-SCRIPT_DIR=$(dirname "$0")
-source "$SCRIPT_DIR"/system_info.sh
-source "$SCRIPT_DIR"/network_info.sh
-source "$SCRIPT_DIR"/memory_info.sh
-source "$SCRIPT_DIR"/disk_info.sh
+source ./system_info.sh
+source ./network_info.sh
+source ./memory_info.sh
+source ./disk_info.sh
 
 # Вывод информации
 echo "HOSTNAME = $HOSTNAME"
