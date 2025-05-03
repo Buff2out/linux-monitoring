@@ -4,3 +4,7 @@ pub enum Info {
     free(f64),
 }
 
+impl Info {
+    
+}
+

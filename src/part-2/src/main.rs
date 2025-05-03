@@ -13,7 +13,7 @@ struct Sys {
     timedate: timedate::Info,
     network: network::Info,
     ram: memory::Info,
-    disk: disk::Info,
+    disk: Vec<disk::Info>,
 }
 
 
@@ -24,6 +24,9 @@ impl Sys {
             None => String::from("Not found")
         };
         println!("Hostname: {}", hostname);
+    }
+    pub fn collect() -> Option<> {
+        
     }
 
 }
