@@ -1,6 +1,6 @@
-pub enum Info {
-    hostname(String),
-    user(String),
-    os(String),
-    core(String),
+pub struct Info {
+    hostname: String,
+    user: String,
+    os: String,
+    core: String,
 }

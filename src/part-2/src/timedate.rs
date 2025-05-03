@@ -1,6 +1,6 @@
-pub enum Info {
-    date(String),
-    uptime(String),
-    uptime_sec(u64),
-    timezone(String),
+pub struct Info {
+    date: String,
+    uptime: String,
+    uptime_sec: u64,
+    timezone: String,
 }

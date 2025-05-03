@@ -1,5 +1,5 @@
-pub enum Info {
-    ip(String),
-    mask(String),
-    gateway(String),
+pub struct Info {
+    ip: String,
+    mask: String,
+    gateway: String,
 }
