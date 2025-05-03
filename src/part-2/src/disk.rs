@@ -3,7 +3,7 @@
 
 use sysinfo::Disks;
 
-
+#[derive(Debug)]
 pub struct Info {
     name: String,
     filesystem: Filesystem,
@@ -12,6 +12,7 @@ pub struct Info {
     free: u64,
 }
 
+#[derive(Debug)]
 enum Filesystem {
     Fat32,
     Exfat,
@@ -22,7 +23,7 @@ enum Filesystem {
 }
 
 impl Info {
-    pub fn get() {
+    pub fn get() -> Vec<Info> {
         let disks = Disks::new_with_refreshed_list();
         let mut res: Vec<Info> = Vec::new();
         for disk in disks.list() {
@@ -55,6 +56,7 @@ impl Info {
             }; 
             res.push(disk);
         }
+        res
     }
 }
 

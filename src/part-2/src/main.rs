@@ -8,6 +8,8 @@ mod disk;
 
 use sysinfo::System;
 
+use disk::Info;
+
 struct Sys {
     general: general::Info,
     timedate: timedate::Info,
@@ -25,8 +27,9 @@ impl Sys {
         };
         println!("Hostname: {}", hostname);
     }
-    pub fn collect() -> Option<> {
-        
+    pub fn collect() {
+        let sys = Info::get();
+        println!("{:?}", &sys);
     }
 
 }
@@ -34,4 +37,5 @@ impl Sys {
 fn main() {
     println!("linux-monitoring-2");
     Sys::hostname();
+    Sys::collect();
 }
