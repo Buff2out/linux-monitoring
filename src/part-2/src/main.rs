@@ -5,7 +5,11 @@ struct SystemInfo;
 
 impl SystemInfo {
     fn hostname() {
-        println!("Hostname: {:?}", System::host_name())
+        let hostname = match System::host_name() {
+            Some(hn) => hn,
+            None => String::from("Not found")
+        };
+        println!("Hostname: {}", hostname);
     }
 }
 
