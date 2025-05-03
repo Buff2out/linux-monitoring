@@ -1,50 +1,23 @@
 // use std::alloc::System;
 
+mod general;
+mod timedate;
+mod network;
+mod memory;
+mod disk;
+
 use sysinfo::System;
 
-enum General {
-    hostname(String),
-    user(String),
-    os(String),
-}
-
-enum TimeDate {
-    date(String),
-    uptime(String),
-    uptime_sec(u64),
-    timezone(String),
-}
-
-enum Network {
-    ip(String),
-    mask(String),
-    gateway(String),
-}
-
-enum Memory {
-    total(f64),
-    used(f64),
-    free(f64),
-}
-
-enum Disk {
-    total(f64),
-    used(f64),
-    free(f64),
-}
-
-struct SystemInfo {
-    general: General,
-    timedate: TimeDate,
-    network: Network,
-    ram: Memory,
-    disk: Disk,
-
-    filesystem: String, // возможность переконвертировать в enum
+struct Sys {
+    general: general::Info,
+    timedate: timedate::Info,
+    network: network::Info,
+    ram: memory::Info,
+    disk: disk::Info,
 }
 
 
-impl SystemInfo {
+impl Sys {
     fn hostname() {
         let hostname = match System::host_name() {
             Some(hn) => hn,
