@@ -11,5 +11,5 @@ enum Filesystem {
     ext4,
     ntfs,
     btrfs,
-    unknown(String),
+    unknown,
 }

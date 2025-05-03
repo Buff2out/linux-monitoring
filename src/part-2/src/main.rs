@@ -30,5 +30,5 @@ impl Sys {
 
 fn main() {
     println!("linux-monitoring-2");
-    SystemInfo::hostname();
+    Sys::hostname();
 }
