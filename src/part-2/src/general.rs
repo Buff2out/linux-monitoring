@@ -1,6 +1,29 @@
+use sysinfo::{ System, Users };
+
+#[derive(Debug)]
 pub struct Info {
     hostname: String,
-    user: String,
+    users: Vec<String>,
     os: String,
-    core: String,
+}
+
+impl Info {
+    pub fn get() -> Info {
+        let users = Users::new();
+        let mut res: Vec<String> = Vec::new();
+        for user in &users {
+            res.push(String::from(user.name()));
+        }
+        Info {
+            os: match System::os_version() {
+                Some(val) => val,
+                None => String::from("Unknown"),
+            },
+            hostname: match System::host_name() {
+                Some(val) => val,
+                None => String::from("Unknown"),
+            },
+            users: res,
+        }
+    }
 }

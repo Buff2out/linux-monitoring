@@ -8,8 +8,6 @@ mod disk;
 
 use sysinfo::System;
 
-use disk::Info;
-
 struct Sys {
     general: general::Info,
     timedate: timedate::Info,
@@ -28,7 +26,7 @@ impl Sys {
         println!("Hostname: {}", hostname);
     }
     pub fn collect() {
-        let sys = Info::get();
+        let sys = (disk::Info::get(), general::Info::get());
         println!("{:?}", &sys);
     }
 
