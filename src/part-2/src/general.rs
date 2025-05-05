@@ -6,7 +6,7 @@ pub struct Info {
     users: Vec<String>,
     os: String,
 }
-
+// TODO: Force code to put data of users and os, NOT UNKNOWN
 impl Info {
     pub fn get() -> Self {
         let users = Users::new();
