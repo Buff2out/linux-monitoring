@@ -1,5 +1,7 @@
-// use std::alloc::System;
-
+/*  
+Mostly use this as lib.rs
+https://docs.rs/sysinfo/latest/sysinfo/
+*/
 mod general;
 mod timedate;
 mod network;
@@ -30,11 +32,14 @@ impl Sys {
             disk::Info::get(), 
             general::Info::get(), 
             memory::Info::get(),
+            network::Info::get(),
         );
         println!("{:?}", &sys);
     }
 
 }
+
+// TODO: Create MORE PRETTY print structure
 
 fn main() {
     println!("linux-monitoring-2");
