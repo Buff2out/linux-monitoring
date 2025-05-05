@@ -23,7 +23,7 @@ enum Filesystem {
 }
 
 impl Info {
-    pub fn get() -> Vec<Info> {
+    pub fn get() -> Vec<Self> {
         let disks = Disks::new_with_refreshed_list();
         let mut res: Vec<Info> = Vec::new();
         for disk in disks.list() {

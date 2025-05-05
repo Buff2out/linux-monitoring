@@ -8,7 +8,7 @@ pub struct Info {
 }
 
 impl Info {
-    pub fn get() -> Info {
+    pub fn get() -> Self {
         let mut sys = System::new_all();
 
         sys.refresh_all();

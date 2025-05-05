@@ -8,7 +8,7 @@ pub struct Info {
 }
 
 impl Info {
-    pub fn get() -> Info {
+    pub fn get() -> Self {
         let users = Users::new();
         let mut res: Vec<String> = Vec::new();
         for user in &users {

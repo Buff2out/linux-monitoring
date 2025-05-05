@@ -10,7 +10,7 @@ pub struct Info {
 }
 
 impl Info {
-    pub fn get() -> Info {
+    pub fn get() -> Self {
         let now: DateTime<Local> = Local::now();
         
         let date = now.format("%Y-%m-%d %H:%M:%S").to_string();

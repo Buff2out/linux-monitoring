@@ -21,22 +21,14 @@ struct Sys {
 
 
 impl Sys {
-    fn hostname() {
-        let hostname = match System::host_name() {
-            Some(hn) => hn,
-            None => String::from("Not found")
-        };
-        println!("Hostname: {}", hostname);
-    }
-    pub fn collect() {
-        let sys = Sys {
+    pub fn collect() -> Self {
+        Self {
             general: general::Info::get(), 
             timedate: timedate::Info::get(),
             network: network::Info::get(),
             ram: memory::Info::get(),
             disk: disk::Info::get(), 
-        };
-        println!("{:?}", &sys);
+        }
     }
 
 }
@@ -44,7 +36,6 @@ impl Sys {
 // TODO: Create MORE PRETTY print structure
 
 fn main() {
-    println!("linux-monitoring-2");
-    Sys::hostname();
-    Sys::collect();
+    let sys = Sys::collect();
+    println!("{:?}", &sys);
 }

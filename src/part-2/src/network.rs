@@ -15,7 +15,7 @@ pub struct Ip {
 
 
 impl Info {
-    pub fn get() -> Vec<Info> {
+    pub fn get() -> Vec<Self> {
         let mut res: Vec<Info> = Vec::new();
         let networks = Networks::new_with_refreshed_list();
         for (interface_name, network) in &networks {
