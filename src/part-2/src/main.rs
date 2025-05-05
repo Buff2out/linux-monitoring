@@ -26,7 +26,11 @@ impl Sys {
         println!("Hostname: {}", hostname);
     }
     pub fn collect() {
-        let sys = (disk::Info::get(), general::Info::get());
+        let sys = (
+            disk::Info::get(), 
+            general::Info::get(), 
+            memory::Info::get(),
+        );
         println!("{:?}", &sys);
     }
 
