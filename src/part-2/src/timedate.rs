@@ -1,4 +1,4 @@
-use chrono::{Local, DateTime, FixedOffset};
+use chrono::{Local, DateTime};
 use sysinfo::System;
 
 #[derive(Debug)]
