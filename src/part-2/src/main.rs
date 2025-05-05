@@ -33,6 +33,7 @@ impl Sys {
             general::Info::get(), 
             memory::Info::get(),
             network::Info::get(),
+            timedate::Info::get(),
         );
         println!("{:?}", &sys);
     }
