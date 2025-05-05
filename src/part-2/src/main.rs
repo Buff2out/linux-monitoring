@@ -8,8 +8,6 @@ mod network;
 mod memory;
 mod disk;
 
-use sysinfo::System;
-
 #[derive(Debug)]
 struct Sys {
     general: general::Info,
