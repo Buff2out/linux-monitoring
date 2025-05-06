@@ -41,13 +41,14 @@ impl Sys {
             IP = {:?}\n\
             MASK = {}\n\
             GATEWAY = {}\n\
-            RAM_TOTAL = {} GB\n\
-            RAM_USED = {} GB\n\
-            RAM_FREE = {} GB\n\
-            FILESYSTEMTYPE = {}\n\
-            SPACE_ROOT = {} MB\n\
-            SPACE_ROOT_USED = {} MB\n\
-            SPACE_ROOT_FREE = {} MB",
+            RAM_TOTAL = {}\n\
+            RAM_USED = {}\n\
+            RAM_FREE = {}\n\
+            DISK = {}\n\
+            FSTYPE = {}\n\
+            SPACE_ROOT = {}\n\
+            SPACE_ROOT_USED = {}\n\
+            SPACE_ROOT_FREE = {}",
             self.general.hostname(),
             self.timedate.timezone(),
             self.general.users(),
@@ -62,6 +63,7 @@ impl Sys {
             self.ram.total(),
             self.ram.used(),
             self.ram.free(),
+            self.disk[0].name(),
             match self.disk[0].filesystem() {
                 disk::Filesystem::Btrfs => "btrfs",
                 disk::Filesystem::Exfat => "Exfat",
