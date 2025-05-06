@@ -29,7 +29,7 @@ impl Sys {
         }
     }
     pub fn to_str(&self) -> String {
-        let res = format!(
+        format!(
             "HOSTNAME = {}\n\
             TIMEZONE = {}\n\
             USER = {:?}\n\
@@ -74,8 +74,7 @@ impl Sys {
             self.disk[0].used(),
             self.disk[0].free(),
 
-        );
-        res
+        )
     }
 
 }
