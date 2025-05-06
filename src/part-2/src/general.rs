@@ -9,7 +9,7 @@ pub struct Info {
 
 // TODO: Force code to put data of users and os, NOT UNKNOWN
 impl Info {
-    pub fn get() -> Self {
+    pub fn new() -> Self {
         let users = Users::new();
         let mut res: Vec<String> = Vec::new();
         for user in &users {
@@ -27,4 +27,14 @@ impl Info {
             users: res,
         }
     }
+    pub fn hostname(&self) -> &str {
+        &self.hostname
+    }
+    pub fn users(&self) -> &[String] {
+        &self.users
+    }
+    pub fn os(&self) -> &str {
+        &self.os
+    }
+    
 }

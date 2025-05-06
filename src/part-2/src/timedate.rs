@@ -10,7 +10,7 @@ pub struct Info {
 }
 
 impl Info {
-    pub fn get() -> Self {
+    pub fn new() -> Self {
         let now: DateTime<Local> = Local::now();
         
         let date = now.format("%Y-%m-%d %H:%M:%S").to_string();
@@ -35,5 +35,21 @@ impl Info {
             uptime_sec,
             timezone: format!("UTC{}", timezone),
         }
+    }
+    
+    pub fn date(&self) -> &str {
+        &self.date
+    }
+    
+    pub fn uptime(&self) -> &str {
+        &self.uptime
+    }
+    
+    pub fn uptime_sec(&self) -> u64 {
+        self.uptime_sec
+    }
+    
+    pub fn timezone(&self) -> &str {
+        &self.timezone
     }
 }

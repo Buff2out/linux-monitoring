@@ -1,6 +1,8 @@
 // use procfs::process::MountInfo;
 // use nix::statvfs;
 
+use std::fs::File;
+
 use sysinfo::Disks;
 
 #[derive(Debug)]
@@ -13,7 +15,7 @@ pub struct Info {
 }
 
 #[derive(Debug)]
-enum Filesystem {
+pub enum Filesystem {
     Fat32,
     Exfat,
     Ext4,
@@ -23,7 +25,7 @@ enum Filesystem {
 }
 
 impl Info {
-    pub fn get() -> Vec<Self> {
+    pub fn new() -> Vec<Self> {
         let disks = Disks::new_with_refreshed_list();
         let mut res: Vec<Info> = Vec::new();
         for disk in disks.list() {
@@ -58,6 +60,22 @@ impl Info {
         }
         res
     }
+    pub fn name(&self) -> &str {
+        &self.name
+    }
+    pub fn filesystem(&self) -> &Filesystem {
+        &self.filesystem
+    }
+    pub fn total(&self) -> u64 {
+        self.total
+    }
+    pub fn used(&self) -> u64 {
+        self.used
+    }
+    pub fn free(&self) -> u64 {
+        self.free
+    }
+
 }
 
 

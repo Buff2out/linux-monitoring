@@ -2,20 +2,30 @@ use sysinfo::Networks;
 use std::net::IpAddr;
 
 #[derive(Debug)]
-pub struct Info {
-    name: String,
-    ip: Vec<Ip>,
-}
-
-#[derive(Debug)]
 pub struct Ip {
     ip: IpAddr,
     mask: u8,
 }
 
+#[derive(Debug)]
+pub struct Info {
+    name: String,
+    ips: Vec<Ip>,
+}
+
+impl Ip {
+    pub fn ip(&self) -> IpAddr {
+        self.ip
+    }
+    
+    pub fn mask(&self) -> u8 {
+        self.mask
+    }
+}
+
 
 impl Info {
-    pub fn get() -> Vec<Self> {
+    pub fn new() -> Vec<Self> {
         let mut res: Vec<Info> = Vec::new();
         let networks = Networks::new_with_refreshed_list();
         for (interface_name, network) in &networks {
@@ -32,10 +42,18 @@ impl Info {
             }
             let info = Info {
                 name: interface_name.clone(),
-                ip: ips,
+                ips,
             };
             res.push(info);
         }
         res
+    }
+    
+    pub fn name(&self) -> &str {
+        &self.name
+    }
+    
+    pub fn ips(&self) -> &[Ip] {
+        &self.ips
     }
 }

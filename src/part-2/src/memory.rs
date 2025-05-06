@@ -8,7 +8,7 @@ pub struct Info {
 }
 
 impl Info {
-    pub fn get() -> Self {
+    pub fn new() -> Self {
         let mut sys = System::new_all();
 
         sys.refresh_all();
@@ -17,6 +17,15 @@ impl Info {
             used: sys.available_memory(),
             free: sys.free_memory(),
         }
+    }
+    pub fn total(&self) -> u64 {
+        self.total
+    }
+    pub fn used(&self) -> u64 {
+        self.used
+    }
+    pub fn free(&self) -> u64 {
+        self.free
     }
 }
 
