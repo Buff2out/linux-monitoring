@@ -28,35 +28,55 @@ impl Sys {
             disk: disk::Info::new(), 
         }
     }
-    // pub fn to_str(&self) -> &str {
-    //     let res = format!(
-    //         "HOSTNAME = {}\n\
-    //         TIMEZONE = {}\n\
-    //         USER = {:?}\n\
-    //         OS = {}\n\
-    //         DATE = {}\n\
-    //         UPTIME = {}\n\
-    //         UPTIME_SEC = {}\n\
-    //         IP = {:?}\n\
-    //         MASK = {}\n\
-    //         GATEWAY = {}\n\
-    //         RAM_TOTAL = {} GB\n\
-    //         RAM_USED = {} GB\n\
-    //         RAM_FREE = {} GB\n\
-    //         SPACE_ROOT = {} MB\n\
-    //         SPACE_ROOT_USED = {} MB\n\
-    //         SPACE_ROOT_FREE = {} MB",
-    //     self.general.hostname(),
-    //     self.timedate.timezone(),
-    //     self.general.users(),
-    //     self.general.os(),
-    //     self.timedate.date(),
-    //     self.timedate.uptime(),
-    //     self.timedate.uptime_sec(),
-    //     self.network
-    // );
-    //     "fdsf"
-    // }
+    pub fn to_str(&self) -> String {
+        let res = format!(
+            "HOSTNAME = {}\n\
+            TIMEZONE = {}\n\
+            USER = {:?}\n\
+            OS = {}\n\
+            DATE = {}\n\
+            UPTIME = {}\n\
+            UPTIME_SEC = {}\n\
+            INTERFACE = {}\n\
+            IP = {:?}\n\
+            MASK = {}\n\
+            GATEWAY = {}\n\
+            RAM_TOTAL = {} GB\n\
+            RAM_USED = {} GB\n\
+            RAM_FREE = {} GB\n\
+            FILESYSTEMTYPE = {}\n\
+            SPACE_ROOT = {} MB\n\
+            SPACE_ROOT_USED = {} MB\n\
+            SPACE_ROOT_FREE = {} MB",
+            self.general.hostname(),
+            self.timedate.timezone(),
+            self.general.users(),
+            self.general.os(),
+            self.timedate.date(),
+            self.timedate.uptime(),
+            self.timedate.uptime_sec(),
+            self.network[0].name(), // что-то слишком рандомно, 
+            self.network[0].ips()[0].ip(), // TODO: сделать match по интерфейсу.
+            self.network[0].ips()[0].mask(),
+            self.network[0].ips()[0].ip(),
+            self.ram.total(),
+            self.ram.used(),
+            self.ram.free(),
+            match self.disk[0].filesystem() {
+                disk::Filesystem::Btrfs => "btrfs",
+                disk::Filesystem::Exfat => "Exfat",
+                disk::Filesystem::Ext4 => "Ext4",
+                disk::Filesystem::Fat32 => "Fat32",
+                disk::Filesystem::Ntfs => "Ntfs",
+                disk::Filesystem::Unknown => "Unknown",
+            },
+            self.disk[0].total(),
+            self.disk[0].used(),
+            self.disk[0].free(),
+
+        );
+        res
+    }
 
 }
 
@@ -64,5 +84,7 @@ impl Sys {
 
 fn main() {
     let sys = Sys::collect();
-    println!("{:?}", &sys);
+    let sys_log = sys.to_str();
+    // TODO: create write to file and fix random panic of self.network
+    println!("{}", &sys_log);
 }
