@@ -1,8 +1,6 @@
 // use procfs::process::MountInfo;
 // use nix::statvfs;
 
-use std::fs::File;
-
 use sysinfo::Disks;
 
 #[derive(Debug)]
