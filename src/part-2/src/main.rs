@@ -29,6 +29,15 @@ impl Sys {
         }
     }
     pub fn to_str(&self) -> String {
+        use std::net::{IpAddr, Ipv4Addr};
+        let ip = match self.network[0].ips().is_empty() {
+            true => IpAddr::V4(Ipv4Addr::new(0, 0, 0, 0)), // да, знаю, что для ipv6 не подойдёт, но как заглушка
+            false => self.network[0].ips()[0].ip(), // почему нет
+        };
+        let mask_ip = match self.network[0].ips().is_empty() {
+            true => 255, // да, знаю, что для ipv6 не подойдёт, но как заглушка
+            false => self.network[0].ips()[0].mask(), // почему нет
+        };
         format!(
             "HOSTNAME = {}\n\
             TIMEZONE = {}\n\
@@ -56,10 +65,10 @@ impl Sys {
             self.timedate.date(),
             self.timedate.uptime(),
             self.timedate.uptime_sec(),
-            self.network[0].name(), // что-то слишком рандомно, 
-            self.network[0].ips()[0].ip(), // TODO: сделать match по интерфейсу.
-            self.network[0].ips()[0].mask(),
-            self.network[0].ips()[0].ip(),
+            self.network[0].name(),
+            ip, 
+            mask_ip,
+            ip,
             self.ram.total(),
             self.ram.used(),
             self.ram.free(),
