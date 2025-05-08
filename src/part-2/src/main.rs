@@ -17,30 +17,30 @@ struct Sys {
     network: Vec<network::Info>,
     ram: memory::Info,
     disk: Vec<disk::Info>,
+    summary: String,
 }
 
 
 impl Sys {
     pub fn collect() -> Self {
-        Self {
-            general: general::Info::new(), 
-            timedate: timedate::Info::new(),
-            network: network::Info::new(),
-            ram: memory::Info::new(),
-            disk: disk::Info::new(), 
-        }
-    }
-    pub fn to_str(&self) -> String {
+        let general = general::Info::new();
+        let timedate = timedate::Info::new();
+        let network = network::Info::new();
+        let ram = memory::Info::new();
+        let disk = disk::Info::new();
+
         use std::net::{IpAddr, Ipv4Addr};
-        let ip = match self.network[0].ips().is_empty() {
+        let ip = match network[0].ips().is_empty() {
             true => IpAddr::V4(Ipv4Addr::new(0, 0, 0, 0)), // да, знаю, что для ipv6 не подойдёт, но как заглушка
-            false => self.network[0].ips()[0].ip(), // почему нет
+            false => network[0].ips()[0].ip(), // почему нет
         };
-        let mask_ip = match self.network[0].ips().is_empty() {
+        let mask_ip = match network[0].ips().is_empty() {
             true => 255, // да, знаю, что для ipv6 не подойдёт, но как заглушка
-            false => self.network[0].ips()[0].mask(), // почему нет
+            false => network[0].ips()[0].mask(), // почему нет
         };
-        format!(
+        
+
+        let summary = format!(
             "HOSTNAME = {}\n\
             TIMEZONE = {}\n\
             USER = {:?}\n\
@@ -60,22 +60,22 @@ impl Sys {
             SPACE_ROOT = {}\n\
             SPACE_ROOT_USED = {}\n\
             SPACE_ROOT_FREE = {}",
-            self.general.hostname(),
-            self.timedate.timezone(),
-            self.general.users(),
-            self.general.os(),
-            self.timedate.date(),
-            self.timedate.uptime(),
-            self.timedate.uptime_sec(),
-            self.network[0].name(),
+            general.hostname(),
+            timedate.timezone(),
+            general.users(),
+            general.os(),
+            timedate.date(),
+            timedate.uptime(),
+            timedate.uptime_sec(),
+            network[0].name(),
             ip, 
             mask_ip,
             ip,
-            self.ram.total(),
-            self.ram.used(),
-            self.ram.free(),
-            self.disk[0].name(),
-            match self.disk[0].filesystem() {
+            ram.total(),
+            ram.used(),
+            ram.free(),
+            disk[0].name(),
+            match disk[0].filesystem() {
                 disk::Filesystem::Btrfs => "btrfs",
                 disk::Filesystem::Exfat => "Exfat",
                 disk::Filesystem::Ext4 => "Ext4",
@@ -83,14 +83,22 @@ impl Sys {
                 disk::Filesystem::Ntfs => "Ntfs",
                 disk::Filesystem::Unknown => "Unknown",
             },
-            self.disk[0].total(),
-            self.disk[0].used(),
-            self.disk[0].free(),
+            disk[0].total(),
+            disk[0].used(),
+            disk[0].free(),
 
-        )
+        ); 
+        Self {
+            general, 
+            timedate,
+            network,
+            ram,
+            disk, 
+            summary,
+        }
     }
     pub fn write_to_file(self, path: &str) -> Result<(), io::Error> {
-        let binding = Sys::to_str(&self);
+        let binding = self.summary;
         let data = binding.as_bytes();
         std::fs::File::create(path)?.write_all(data)?;
         Ok(())
@@ -102,6 +110,7 @@ impl Sys {
 
 fn main() -> Result<(), io::Error> {
     let sys = Sys::collect();
-    let file = sys.timedate.uptime_sec().to_string();
+    let mut file = sys.timedate.uptime_sec().to_string();
+    file.push_str(".txt");
     sys.write_to_file(&format!("./{}", file))
 }
