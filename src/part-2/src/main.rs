@@ -106,21 +106,21 @@ impl Sys {
 
 }
 
-// TODO: Create MORE PRETTY print structure
-
 fn main() -> Result<(), io::Error> {
     let sys = Sys::collect();
-    let mut file = sys.timedate.uptime_sec().to_string();
-
+    
     let mut input = String::new();
+    println!("{}", sys.summary);
     println!("Save to file (Y/n) ?");
     std::io::stdin()
-        .read_line(&mut input)
-        .expect("Err reading to readline"); 
+    .read_line(&mut input)
+    .expect("Err reading to readline"); 
     match input.chars().next() {
-        Some('Y' | 'y') => {
-            file.push_str(".txt");
-            sys.write_to_file(&format!("./{}", file))
+        Some('Y' | 'y' | 'Д' | 'д') => {
+            let file = String::from(
+                format!("./{}.txt", sys.timedate.uptime_sec().to_string())
+            );
+            sys.write_to_file(&file)
         },
         _ => Ok(()),
     }
