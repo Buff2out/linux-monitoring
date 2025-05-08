@@ -8,6 +8,8 @@ mod network;
 mod memory;
 mod disk;
 
+use std::io::{self, Write};
+
 #[derive(Debug)]
 struct Sys {
     general: general::Info,
@@ -87,14 +89,19 @@ impl Sys {
 
         )
     }
+    pub fn write_to_file(self, path: &str) -> Result<(), io::Error> {
+        let binding = Sys::to_str(&self);
+        let data = binding.as_bytes();
+        std::fs::File::create(path)?.write_all(data)?;
+        Ok(())
+    }
 
 }
 
 // TODO: Create MORE PRETTY print structure
 
-fn main() {
+fn main() -> Result<(), io::Error> {
     let sys = Sys::collect();
-    let sys_log = sys.to_str();
-    // TODO: create write to file and fix random panic of self.network
-    println!("{}", &sys_log);
+    let file = sys.timedate.uptime_sec().to_string();
+    sys.write_to_file(&format!("./{}", file))
 }
