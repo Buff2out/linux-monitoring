@@ -111,6 +111,17 @@ impl Sys {
 fn main() -> Result<(), io::Error> {
     let sys = Sys::collect();
     let mut file = sys.timedate.uptime_sec().to_string();
-    file.push_str(".txt");
-    sys.write_to_file(&format!("./{}", file))
+
+    let mut input = String::new();
+    println!("Save to file (Y/n) ?");
+    std::io::stdin()
+        .read_line(&mut input)
+        .expect("Err reading to readline"); 
+    match input.chars().next() {
+        Some('Y' | 'y') => {
+            file.push_str(".txt");
+            sys.write_to_file(&format!("./{}", file))
+        },
+        _ => Ok(()),
+    }
 }
